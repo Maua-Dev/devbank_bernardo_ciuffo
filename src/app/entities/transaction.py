@@ -5,9 +5,11 @@ from ..enums.transaction_type_enum import TransactionTypeEnum  # DEPOSIT, WITHDR
 
 
 class Transaction:
-    value: int
+    value: float
+    current_balance: float
     transaction_type: TransactionTypeEnum
     timestamp: datetime
+    
 
     def __init__(
         self,
