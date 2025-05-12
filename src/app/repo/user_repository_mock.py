@@ -8,24 +8,25 @@ class UserRepositoryMock:
     user: User
 
     def __init__(self):
-        self.user = User(name="Usuário Exemplo", balance=0)
+        self.user = User(
+            name="Usuário Exemplo",
+            agency="1234",
+            account="12345-6",
+            current_balance=0.0
+        )
 
     def get_user(self) -> User:
         return self.user
 
-    def update_balance(self, new_balance: int) -> None:
-        self.user.balance = new_balance
+    def update_balance(self, new_balance: float) -> None:
+        self.user.current_balance = new_balance
 
     def apply_transaction(self, transaction: Transaction) -> None:
         if transaction.transaction_type == TransactionTypeEnum.DEPOSIT:
-            self.user.balance += transaction.value
+            self.user.current_balance += transaction.value
         elif transaction.transaction_type == TransactionTypeEnum.WITHDRAW:
-            if transaction.value > self.user.balance:
+            if transaction.value > self.user.current_balance:
                 raise ParamNotValidated("value", "Insufficient balance for withdrawal")
-            self.user.balance -= transaction.value
+            self.user.current_balance -= transaction.value
         else:
             raise ParamNotValidated("transaction_type", "Unsupported transaction type")
-
-
-
-

@@ -2,39 +2,31 @@ import pytest
 from src.app.entities.transaction import Transaction
 from src.app.enums.transaction_type_enum import TransactionTypeEnum
 from src.app.repositories.transaction_repository_mock import TransactionRepositoryMock
-from src.app.errors.entity_errors import ParamNotValidated
-
 
 class Test_TransactionRepositoryMock:
 
     def setup_method(self):
         self.repo = TransactionRepositoryMock()
 
-    def test_deposit_transaction(self):
-        transaction = Transaction(value=100, transaction_type=TransactionTypeEnum.DEPOSIT)
-        result = self.repo.deposit(transaction)
-        assert result == transaction
-        assert self.repo.transactions[1] == transaction
-
-    def test_withdraw_transaction(self):
-        transaction = Transaction(value=50, transaction_type=TransactionTypeEnum.WITHDRAW)
-        result = self.repo.withdraw(transaction)
+    def test_add_transaction(self):
+        transaction = Transaction(value=100.0, current_balance=100.0, transaction_type=TransactionTypeEnum.DEPOSIT)
+        result = self.repo.transaction(transaction)
         assert result == transaction
         assert self.repo.transactions[1] == transaction
 
     def test_multiple_transactions(self):
-        t1 = Transaction(value=20, transaction_type=TransactionTypeEnum.DEPOSIT)
-        t2 = Transaction(value=10, transaction_type=TransactionTypeEnum.WITHDRAW)
-        self.repo.deposit(t1)
-        self.repo.withdraw(t2)
+        t1 = Transaction(value=20.0, current_balance=20.0, transaction_type=TransactionTypeEnum.DEPOSIT)
+        t2 = Transaction(value=10.0, current_balance=10.0, transaction_type=TransactionTypeEnum.WITHDRAW)
+        self.repo.transaction(t1)
+        self.repo.transaction(t2)
         assert len(self.repo.transactions) == 2
         assert self.repo.transactions[1] == t1
         assert self.repo.transactions[2] == t2
 
     def test_get_history(self):
-        t1 = Transaction(value=200, transaction_type=TransactionTypeEnum.DEPOSIT)
-        t2 = Transaction(value=100, transaction_type=TransactionTypeEnum.WITHDRAW)
-        self.repo.deposit(t1)
-        self.repo.withdraw(t2)
+        t1 = Transaction(value=200.0, current_balance=200.0, transaction_type=TransactionTypeEnum.DEPOSIT)
+        t2 = Transaction(value=100.0, current_balance=100.0, transaction_type=TransactionTypeEnum.WITHDRAW)
+        self.repo.transaction(t1)
+        self.repo.transaction(t2)
         history = self.repo.get_history()
         assert history == [t1, t2]

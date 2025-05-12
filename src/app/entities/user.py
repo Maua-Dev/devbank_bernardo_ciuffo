@@ -1,20 +1,33 @@
 from typing import Tuple
 from ..errors.entity_errors import ParamNotValidated
 
+
 class User:
     name: str
-    balance: int
+    agency: str
+    account: str
+    current_balance: float
 
-    def __init__(self, name: str, balance: int = 0):
+    def __init__(self, name: str, agency: str, account: str, current_balance: float = 0.0):
         validation_name = self.validate_name(name)
         if not validation_name[0]:
             raise ParamNotValidated("name", validation_name[1])
         self.name = name
 
-        validation_balance = self.validate_balance(balance)
+        validation_agency = self.validate_agency(agency)
+        if not validation_agency[0]:
+            raise ParamNotValidated("agency", validation_agency[1])
+        self.agency = agency
+
+        validation_account = self.validate_account(account)
+        if not validation_account[0]:
+            raise ParamNotValidated("account", validation_account[1])
+        self.account = account
+
+        validation_balance = self.validate_balance(current_balance)
         if not validation_balance[0]:
-            raise ParamNotValidated("balance", validation_balance[1])
-        self.balance = balance
+            raise ParamNotValidated("current_balance", validation_balance[1])
+        self.current_balance = current_balance
 
     @staticmethod
     def validate_name(name: str) -> Tuple[bool, str]:
@@ -22,16 +35,36 @@ class User:
             return False, "Name is required"
         if not isinstance(name, str):
             return False, "Name must be a string"
-        if len(name) < 2:
+        if len(name.strip()) < 2:
             return False, "Name must be at least 2 characters long"
         return True, ""
 
     @staticmethod
-    def validate_balance(balance: int) -> Tuple[bool, str]:
+    def validate_agency(agency: str) -> Tuple[bool, str]:
+        if agency is None:
+            return False, "Agency is required"
+        if not isinstance(agency, str):
+            return False, "Agency must be a string"
+        if not agency.isdigit() or len(agency) != 4:
+            return False, "Agency must be exactly 4 digits"
+        return True, ""
+
+    @staticmethod
+    def validate_account(account: str) -> Tuple[bool, str]:
+        if account is None:
+            return False, "Account is required"
+        if not isinstance(account, str):
+            return False, "Account must be a string"
+        if len(account) != 7 or account[5] != '-' or not (account[:5] + account[6]).isdigit():
+            return False, "Account must follow the format XXXXX-X"
+        return True, ""
+
+    @staticmethod
+    def validate_balance(balance: float) -> Tuple[bool, str]:
         if balance is None:
             return False, "Balance is required"
-        if not isinstance(balance, int):
-            return False, "Balance must be an integer"
+        if not isinstance(balance, (int, float)):
+            return False, "Balance must be a number"
         if balance < 0:
             return False, "Balance cannot be negative"
         return True, ""
@@ -39,8 +72,13 @@ class User:
     def to_dict(self):
         return {
             "name": self.name,
-            "balance": self.balance
+            "agency": self.agency,
+            "account": self.account,
+            "current_balance": self.current_balance
         }
 
     def __repr__(self):
-        return f"User(name={self.name}, balance={self.balance})"
+        return (
+            f"User(name={self.name}, agency={self.agency}, "
+            f"account={self.account}, current_balance={self.current_balance})"
+        )

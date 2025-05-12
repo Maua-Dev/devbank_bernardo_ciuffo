@@ -13,8 +13,5 @@ class TransactionRepositoryMock:
         self.transactions[transaction_id] = transaction
         return transaction
 
-    def get_history(self) -> List[Transaction]:
-        return list(self.transactions.values())
-
-#oi
-
+    def get_history(self) -> List[dict]:
+        return [t.to_dict() for t in self.transactions.values()]
