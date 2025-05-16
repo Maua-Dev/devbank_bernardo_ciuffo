@@ -1,7 +1,7 @@
 from typing import Tuple
 from datetime import datetime
 from ..errors.entity_errors import ParamNotValidated
-from ..enums.transaction_type_enum import TransactionTypeEnum  # DEPOSIT, WITHDRAW
+from ..enums.transaction_type_enum import TransactionTypeEnum  # DEPOSIT, WITHDRAWW
 
 
 class Transaction:
