@@ -8,7 +8,7 @@ class User:
     account: str
     current_balance: float
 
-    def __init__(self, name: str, agency: str, account: str, current_balance: float = 0.0):
+    def __init__(self, name: str=None, agency: str=None, account: str=None, current_balance: float=None):
         validation_name = self.validate_name(name)
         if not validation_name[0]:
             raise ParamNotValidated("name", validation_name[1])
@@ -63,8 +63,8 @@ class User:
     def validate_balance(balance: float) -> Tuple[bool, str]:
         if balance is None:
             return False, "Balance is required"
-        if not isinstance(balance, (int, float)):
-            return False, "Balance must be a number"
+        if not isinstance(balance, float):
+            return False, "Balance must be a float"
         if balance < 0:
             return False, "Balance cannot be negative"
         return True, ""
