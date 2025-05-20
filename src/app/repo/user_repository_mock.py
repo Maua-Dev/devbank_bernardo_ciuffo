@@ -1,10 +1,12 @@
+# src/repo/user_repository_mock.py
 from ..entities.user import User
 from ..entities.transaction import Transaction
 from ..enums.transaction_type_enum import TransactionTypeEnum
 from ..errors.entity_errors import ParamNotValidated
+from ..repo.user_repository_interface import IUserRepository
 
 
-class UserRepositoryMock:
+class UserRepositoryMock(IUserRepository):
     user: User
 
     def __init__(self):
