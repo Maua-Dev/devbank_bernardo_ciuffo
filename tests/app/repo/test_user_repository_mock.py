@@ -1,5 +1,5 @@
 import pytest
-from src.app.repositories.user_repository_mock import UserRepositoryMock
+from src.app.repo.user_repository_mock import UserRepositoryMock
 from src.app.entities.transaction import Transaction
 from src.app.enums.transaction_type_enum import TransactionTypeEnum
 from src.app.errors.entity_errors import ParamNotValidated
