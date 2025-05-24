@@ -3,13 +3,15 @@ import pytest
 from src.app.enums.transaction_type_enum import TransactionTypeEnum
 from src.app.repo.user_repository_mock import UserRepositoryMock
 from src.app.repo.transaction_repository_mock import TransactionRepositoryMock
-from src.app.main import get_user, get_transactions, post_deposit, post_withdraw
+from src.app.main import get_user, get_transaction, post_deposit, post_withdraw
 
 
 class Test_Main:
 
 
     def test_get_user(self):
+        repo = UserRepositoryMock()
+        response = get_user()
         expected = {
             "name": 'Bernardo Ciuffo',
             "agency": "1111",
@@ -104,7 +106,7 @@ class Test_Main:
 
         response_withdraw = post_withdraw(withdraw)
 
-        transactions = get_transactions()
+        transactions = get_transaction()
 
         expected = [
             {

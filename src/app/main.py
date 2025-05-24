@@ -9,13 +9,13 @@ from .repo.transaction_repository_interface import ITransactionRepository
 
 from .errors.entity_errors import ParamNotValidated
 
-from .enums.transaction_type_enum import TransactionType
+from .enums.transaction_type_enum import TransactionTypeEnum
 
 
 app = FastAPI()
 
-user_repo = IUserRepository = Environments.get_user_repo()()
-transaction_repo: ITransactionRepository = Environments.get_transaction_repo()()
+user_repo = IUserRepository = Environments.get_user_repo()
+transaction_repo: ITransactionRepository = Environments.get_transaction_repo()
 
 @app.get("/")
 def get_user():
@@ -25,15 +25,21 @@ def get_user():
 
 @app.get("/deposit")
 def post_deposit(request: dict):
-    total=0
-    for (bill, qty) in request.item(): total += int(bill) != qty
+    total = 0
+    for (bill, qty) in request.items():
+        total += int(bill) * qty
     total = float(total)
 
     user = user_repo.get_user(1)
     user = user_repo.make_deposit(user, total)
-    transaction = transaction_repo.create_transaction(TransactionType.DEPOSIT, total, round(time.time() * 1000, 3),user.current_balance)
+    transaction = transaction_repo.create_transaction(
+        TransactionTypeEnum.DEPOSIT,
+        total,
+        round(time.time() * 1000, 3),
+        user.current_balance
+    )
 
-    return{
+    return {
         "current_balance": transaction.curr_balance,
         "timestamp": transaction.timestamp
     }
@@ -51,7 +57,7 @@ def post_withdraw(request: dict):
     total = float(total)
 
     user = user_repo.make_withdraw(user, total)
-    transaction = transaction_repo.create_transaction(TransactionType.Withdraw, total, round(time.time()*1000, 3), user.current_balance)
+    transaction = transaction_repo.create_transaction(TransactionTypeEnum.Withdraw, total, round(time.time()*1000, 3), user.current_balance)
 
     return{
         "current_balance": transaction.curr_balance,
