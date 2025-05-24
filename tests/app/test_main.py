@@ -13,7 +13,7 @@ class Test_Main:
         expected = {
             "name": 'Bernardo Ciuffo',
             "agency": "1111",
-            "user": "11111-1",
+            "account": "11111-1",
             "current_balance": 1000.0
         }
         assert get_user() == expected

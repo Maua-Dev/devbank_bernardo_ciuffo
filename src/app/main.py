@@ -14,13 +14,13 @@ from .enums.transaction_type_enum import TransactionType
 
 app = FastAPI()
 
-user_repo = IUserRepository = Environments.get_account_repo()()
+user_repo = IUserRepository = Environments.get_user_repo()()
 transaction_repo: ITransactionRepository = Environments.get_transaction_repo()()
 
 @app.get("/")
 def get_user():
-    account = user_repo.get_account(1)
-    return account.to_dict()
+    user = user_repo.get_user(1)
+    return user.to_dict()
 
 
 @app.get("/deposit")
