@@ -1,7 +1,7 @@
 import pytest
 from datetime import datetime
-from src.app.entities.transaction import Transaction
 from src.app.enums.transaction_type_enum import TransactionTypeEnum
+from src.app.entities.transaction import Transaction
 from src.app.errors.entity_errors import ParamNotValidated
 
 
