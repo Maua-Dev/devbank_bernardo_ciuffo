@@ -27,7 +27,7 @@ class TransactionRepositoryMock(ITransactionRepository):
             transaction_type=transaction_type,
             value=transaction_value,
             timestamp=transaction_time,
-            current_balance=curr_balance
+            curr_balance=curr_balance
         )
         self.transactions[self.transactions_counter] = transaction
         return transaction

@@ -36,11 +36,11 @@ def post_deposit(request: dict):
         TransactionTypeEnum.DEPOSIT,
         total,
         round(time.time() * 1000, 3),
-        user.current_balance
+        user.curr_balance
     )
 
     return {
-        "current_balance": transaction.curr_balance,
+        "curr_balance": transaction.curr_balance,
         "timestamp": transaction.timestamp
     }
 
@@ -57,10 +57,10 @@ def post_withdraw(request: dict):
     total = float(total)
 
     user = user_repo.make_withdraw(user, total)
-    transaction = transaction_repo.create_transaction(TransactionTypeEnum.Withdraw, total, round(time.time()*1000, 3), user.current_balance)
+    transaction = transaction_repo.create_transaction(TransactionTypeEnum.Withdraw, total, round(time.time()*1000, 3), user.curr_balance)
 
     return{
-        "current_balance": transaction.curr_balance,
+        "curr_balance": transaction.curr_balance,
         "timestamp": transaction.timestamp
     }
     

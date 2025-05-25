@@ -16,7 +16,7 @@ class Test_Main:
             "name": 'Bernardo Ciuffo',
             "agency": "1111",
             "user": "11111-1",
-            "current_balance": 1000.0
+            "curr_balance": 1000.0
         }
         assert get_user() == expected
          
@@ -35,7 +35,7 @@ class Test_Main:
         response = post_deposit(request)
 
         expected = {
-            "current_balance": 1410.0,
+            "curr_balance": 1410.0,
             "timestamp": response["timestamp"]
         }
 
@@ -57,7 +57,7 @@ class Test_Main:
         response = post_withdraw(request)
 
         expected = {
-            "current_balance": 1210.0,
+            "curr_balance": 1210.0,
             "timestamp": response["timestamp"]
         }
 
@@ -112,13 +112,13 @@ class Test_Main:
             {
             "type": TransactionTypeEnum.DEPOSIT.value,
             "value": 410.0,
-            "current_balance": 1410.0,
+            "curr_balance": 1410.0,
             "timestamp": response_deposit["timestamp"]
             },
             {
             "type": TransactionTypeEnum.WITHDRAW.value,
             "value": 200.0,
-            "current_balance": 1210.0,
+            "curr_balance": 1210.0,
             "timestamp": response_withdraw["timestamp"]
             }
         ]

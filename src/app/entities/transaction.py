@@ -77,9 +77,9 @@ class Transaction:
 
     def to_dict(self):
         return {
-            "type": self.transaction_type.value,
+            "transaction_type": self.transaction_type.value,
             "value": self.value,
-            "current_balance": self.curr_balance,
+            "curr_balance": self.curr_balance,
             "timestamp": self.timestamp
         }
 

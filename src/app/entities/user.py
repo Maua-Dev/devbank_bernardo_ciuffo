@@ -6,9 +6,9 @@ class User:
     name: str
     agency: str
     account: str
-    current_balance: float
+    curr_balance: float
 
-    def __init__(self, name: str=None, agency: str=None, account: str=None, current_balance: float=None):
+    def __init__(self, name: str=None, agency: str=None, account: str=None, curr_balance: float=None):
         validation_name = self.validate_name(name)
         if not validation_name[0]:
             raise ParamNotValidated("name", validation_name[1])
@@ -24,10 +24,10 @@ class User:
             raise ParamNotValidated("account", validation_account[1])
         self.account = account
 
-        validation_balance = self.validate_balance(current_balance)
+        validation_balance = self.validate_balance(curr_balance)
         if not validation_balance[0]:
-            raise ParamNotValidated("current_balance", validation_balance[1])
-        self.current_balance = current_balance
+            raise ParamNotValidated("curr_balance", validation_balance[1])
+        self.curr_balance = curr_balance
 
     @staticmethod
     def validate_name(name: str) -> Tuple[bool, str]:
@@ -60,12 +60,12 @@ class User:
         return True, ""
 
     @staticmethod
-    def validate_balance(balance: float) -> Tuple[bool, str]:
-        if balance is None:
+    def validate_balance(curr_balance: float) -> Tuple[bool, str]:
+        if curr_balance is None:
             return False, "Balance is required"
-        if not isinstance(balance, float):
+        if not isinstance(curr_balance, float):
             return False, "Balance must be a float"
-        if balance < 0:
+        if curr_balance < 0:
             return False, "Balance cannot be negative"
         return True, ""
 
@@ -74,11 +74,11 @@ class User:
             "name": self.name,
             "agency": self.agency,
             "account": self.account,
-            "current_balance": self.current_balance
+            "curr_balance": self.curr_balance
         }
 
     def __repr__(self):
         return (
             f"User(name={self.name}, agency={self.agency}, "
-            f"account={self.account}, current_balance={self.current_balance})"
+            f"account={self.account}, curr_balance={self.curr_balance})"
         )
